@@ -39,12 +39,12 @@ int main(int argc, char **argv)
 {
     List *list = createList();
 
-    Person p1 = {"Charles", 20};
-    Person p2 = {"Zach", 1928};
-    Person p6 = {"Zach", 1928};
+    Person p1 = {"John", 20};
+    Person p2 = {"Doe", 34};
     Person p3 = {"Jake", 23};
     Person p4 = {"James", 29};
     Person p5 = {"Jason", 18};
+    Person p6 = {"Sam", 67};
 
     listAdd(&list, &p1);
     listAdd(&list, &p2);
@@ -63,56 +63,8 @@ int main(int argc, char **argv)
     }
     Person toFind = {"Zach", 1928};
     Person toFind2 = {"Zack", 1928};
-    printf("%d\n", listIndexOf(list, &toFind, comparePerson));
-    printf("%d\n", listLastIndexOf(list, &toFind, comparePerson));
-    printf("%d\n", listIndexOf(list, &toFind2, comparePerson));
 
-    /*
-    //Random class assignment
-    int array[6] = {10,20,30,40,50,60};
-
-    int *ptr = array;
-    for(int i = 0; i < 6; i++)
-        printf("%d ", *(ptr++));
-    printf("\n");
-    */
-    /*
-    listAdd(&list, "Howdy");
-    listAdd(&list, "Sarah");
-    listAdd(&list, "Jack");
-    listAdd(&list, "Zach");
-    listAdd(&list, "Henry");
-    listAdd(&list, "Henry");
-    listAdd(&list, "Henry");
-    listAdd(&list, "Henry");
-    listAdd(&list, "Henry");
-    listAdd(&list, "Henry");
-    listAdd(&list, "Henry");
-
-    for(int i = 0; i < list->size; i++)
-    {
-        printf("%s ", (char *)listGet(list, i));
-    }
-    printf("\n%lu\n", list->capacity);
-
-    ArrayList *newList = listClone(list);
-    listClear(&list);
-
-    for(int i = 0; i < list->size; i++)
-    {
-        printf("%s ", (char *)listGet(list, i));
-    }
-    printf("\n%lu\n", list->capacity);
-
-    for(int i = 0; i < newList->size; i++)
-    {
-        printf("%s ", (char *)listGet(newList, i));
-    }
-    printf("\n%lu\n", newList->capacity);
-
-    freeList(&newList);
-    */
-
+    
     freeList(&list);
     return 0;
 }
