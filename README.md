@@ -297,16 +297,16 @@ Before you can compile, ensure that you have the following prerequisites install
 
 Follow these steps to compile:
 
-1. **Clone the Repository:** If you haven't already, clone the "ArrayList" repository to your local machine:
+1. **Clone the Repository:** If you haven't already, clone the "Generic_C_ArrayList" repository to your local machine:
 
    ```bash
-   git clone https://github.com/yourusername/my-program.git
+   git clone https://github.com/KhiemNguyen15/Generic_C_ArrayList.git
    ```
 
 2. **Navigate to the Project Directory:** Change your current directory to the project root:
 
     ```bash
-    cd arraylist
+    cd Generic_C_ArrayList 
     ```
 
 3. **Compile the Program:** Run the `make` command to compile the program. The Makefile will automatically locate source files in the `src` directory, include header files from the `include` directory, and produce an executable named `arraylistrunner.exe`:
