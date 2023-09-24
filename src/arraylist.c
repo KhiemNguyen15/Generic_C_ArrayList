@@ -219,7 +219,7 @@ int listLastIndexOf(const ArrayList *list, const void *toFind, EqualityFunction 
     return -1;
 }
 
-void listSort(ArrayList **listPtr, __compar_fn_t func)
+void listSort(ArrayList **listPtr, CompareFunction func)
 {
     ArrayList *list = *listPtr;
 

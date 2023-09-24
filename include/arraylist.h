@@ -14,6 +14,7 @@ struct ArrayList
 };
 
 typedef bool (*EqualityFunction)(const void *, const void *);
+typedef int (*CompareFunction)(const void *, const void *);
 
 ArrayList *createList(void);
 ArrayList *listClone(const ArrayList *list);
@@ -27,7 +28,7 @@ void listRemoveElement(ArrayList **listPtr, const void *toRemove, EqualityFuncti
 void listRemoveRange(ArrayList **listPtr, const size_t start, const size_t end);
 void listRemoveAll(ArrayList **listPtr, const ArrayList *toRemove, EqualityFunction compare);
 void listClear(ArrayList **listPtr);
-void listSort(ArrayList **listPtr, __compar_fn_t func);
+void listSort(ArrayList **listPtr, CompareFunction func);
 
 void *listGet(const ArrayList *list, const size_t index);
 bool listContains(const ArrayList *list, const void *toFind, EqualityFunction compare);
