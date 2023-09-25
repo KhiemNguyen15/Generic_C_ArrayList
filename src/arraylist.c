@@ -276,7 +276,6 @@ void listSort(ArrayList **listPtr, CompareFunction compare)
 {
     ArrayList *list = *listPtr;
 
-    //qsort(list->arr, list->size, sizeof(Data), compare);
     quicksort(list->arr, 0, list->size - 1, compare);
 }
 
