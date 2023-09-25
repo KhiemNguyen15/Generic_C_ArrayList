@@ -111,7 +111,7 @@ void listRetainAll(ArrayList **listPtr, const ArrayList *toRetain, EqualityFunct
 {
     ArrayList *list = *listPtr;
 
-    for(int i = 0; i < list->size; i++)
+    for(int i = list->size - 1; i >= 0; i--)
     {
         if(!listContains(toRetain, listGet(list, i), compare))
         {
@@ -160,9 +160,22 @@ void listRemoveRange(ArrayList **listPtr, const size_t start, const size_t end)
         return;
     }
 
-    for(int i = start; i < end; i++)
+    for(int i = end - 1; i >= start; i--)
     {
         listRemove(&list, i);
+    }
+}
+
+void listRemoveIf(ArrayList **listPtr, CheckFunction check)
+{
+    ArrayList *list = *listPtr;
+
+    for(int i = list->size - 1; i >= 0; i--)
+    {
+        if(check(listGet(list, i)))
+        {
+            listRemove(&list, i);
+        }
     }
 }
 

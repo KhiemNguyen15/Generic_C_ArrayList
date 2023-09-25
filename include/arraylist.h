@@ -17,6 +17,8 @@ struct ArrayList
 typedef bool (*EqualityFunction)(const void *, const void *);
 // A comparison function that defines the sorting order.
 typedef int (*CompareFunction)(const void *, const void *);
+// A function that returns the result of a checked conditional.
+typedef bool (*CheckFunction)(const void *);
 
 // Creates a new empty ArrayList.
 ArrayList *createList(void);
@@ -39,6 +41,8 @@ void listRemove(ArrayList **listPtr, const size_t index);
 void listRemoveElement(ArrayList **listPtr, const void *toRemove, EqualityFunction compare);
 // Removes elements from the ArrayList within the specified range from the start index (inclusive) to the end index (exclusive).
 void listRemoveRange(ArrayList **listPtr, const size_t start, const size_t end);
+// Removes all elements that satisfy the conditional.
+void listRemoveIf(ArrayList **listPtr, CheckFunction check);
 // Removes all occurrences of elements from another ArrayList from the current ArrayList based on a specified comparison function.
 void listRemoveAll(ArrayList **listPtr, const ArrayList *toRemove, EqualityFunction compare);
 // Removes all elements from the ArrayList.

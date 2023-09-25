@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -I./include
 SOURCES = $(wildcard src/*.c)
 OBJECTS = $(SOURCES:.c=.o)
-EXECUTABLE = arraylistrunner.exe 
+EXECUTABLE = arraylistrunner
 
 all: $(EXECUTABLE)
 

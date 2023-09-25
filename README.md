@@ -15,6 +15,12 @@ This C library provides a dynamic array list implementation that can store and m
 ### Creating an ArrayList
 
 ```c
+ArrayList *createList(void)
+```
+
+Usage:
+
+```c
 ArrayList *list = createList();
 ```
 
@@ -24,15 +30,53 @@ ArrayList *list = createList();
 ### Cloning an ArrayList
 
 ```c
+ArrayList *listClone(const ArrayList *list)
+```
+
+Usage:
+
+```c
 ArrayList *newList = listClone(list);
 ```
 
 * Creates a new ArrayList that is a deep copy of an existing ArrayList.
 * Returns a pointer to the newly created ArrayList.
 
+## Function Pointers
+
+### Equality Function
+
+```c
+typedef bool (*EqualityFunction)(const void *, const void *);
+```
+
+* A function to compare elements for equality.
+
+### Comparison Function
+
+```c
+typedef int (*CompareFunction)(const void *, const void *);
+```
+
+* A comparison function that defines the sorting order.
+
+### Check Function
+
+```c
+typedef bool (*CheckFunction)(const void *);
+```
+
+* A function that returns the result of a checked conditional.
+
 ## Basic Operations
 
 ### Adding an Element
+
+```c
+void listAdd(ArrayList **listPtr, void *val)
+```
+
+Usage:
 
 ```c
 listAdd(&list, element);
@@ -44,6 +88,12 @@ listAdd(&list, element);
 ### Adding All Elements from Another ArrayList
 
 ```c
+void listAddAll(ArrayList **listPtr, const ArrayList *toAdd)
+```
+
+Usage:
+
+```c
 listAddAll(&list, toAdd);
 ```
 
@@ -51,6 +101,12 @@ listAddAll(&list, toAdd);
 * `toAdd`: A pointer to the ArrayList containing the elements to be added.
 
 ### Inserting an Element
+
+```c
+void listInsert(ArrayList **listPtr, void *val, const size_t index)
+```
+
+Usage:
 
 ```c
 listInsert(&list, element, index);
@@ -63,6 +119,12 @@ listInsert(&list, element, index);
 ### Setting an Element
 
 ```c
+void listSet(ArrayList **listPtr, void *val, const size_t index)
+```
+
+Usage:
+
+```c
 listSet(&list, element, index);
 ```
 
@@ -73,14 +135,26 @@ listSet(&list, element, index);
 ### Retaining All Elements from Another ArrayList
 
 ```c
+void listRetainAll(ArrayList **listPtr, const ArrayList *toRetain, EqualityFunction compare)
+```
+
+Usage:
+
+```c
 listRetainAll(&list, toRetain, compareFunction);
 ```
 
-* Retains only the elements of the other ArrayList (`toRetain`) in the current ArrayList.
+* Retains only the elements of another ArrayList (`toRetain`) in the current ArrayList.
 * `toRetain`: A pointer to the ArrayList containing the elements to be retained.
 * `compareFunction`: A function used to compare elements for equality.
 
 ### Removing an Element at an Index
+
+```c
+void listRemove(ArrayList **listPtr, const size_t index)
+```
+
+Usage:
 
 ```c
 listRemove(&list, index);
@@ -90,6 +164,12 @@ listRemove(&list, index);
 * `index`: The index of the element to be removed.
 
 ### Removing the First Occurrence of an Element
+
+```c
+void listRemoveElement(ArrayList **listPtr, const void *toRemove, EqualityFunction compare)
+```
+
+Usage:
 
 ```c
 listRemoveElement(&list, element, compareFunction);
@@ -102,6 +182,12 @@ listRemoveElement(&list, element, compareFunction);
 ### Removing Elements within a Range
 
 ```c
+void listRemoveRange(ArrayList **listPtr, const size_t start, const size_t end)
+```
+
+Usage:
+
+```c
 listRemoveRange(&list, start, end);
 ```
 
@@ -109,7 +195,28 @@ listRemoveRange(&list, start, end);
 * `start`: The index of the first element to be removed (inclusive).
 * `end`: The index of the element immediately after the last element to be removed (exclusive).
 
-### Removing All Elements from Another ArrayList
+### Removing All Elements that Satisfy a Condition
+
+```c
+void listRemoveIf(ArrayList **listPtr, CheckFunction check)
+```
+
+Usage:
+
+```c
+listRemoveIf(&list, checkFunction);
+```
+
+* Removes all elements that satisfy a conditional in the specified function.
+* `checkFunction`: A function that returns the result of a checked conditional.
+
+### Removing All Matching Elements in Another ArrayList
+
+```c
+void listRemoveAll(ArrayList **listPtr, const ArrayList *toRemove, EqualityFunction compare)
+```
+
+Usage:
 
 ```c
 listRemoveAll(&list, toRemove, compareFunction);
@@ -122,12 +229,24 @@ listRemoveAll(&list, toRemove, compareFunction);
 ### Clearing the ArrayList
 
 ```c
+void listClear(ArrayList **listPtr)
+```
+
+Usage:
+
+```c
 listClear(&list);
 ```
 
 * Removes all elements from the ArrayList, making it empty.
 
 ### Sorting the ArrayList
+
+```c
+void listSort(ArrayList **listPtr, CompareFunction compare)
+```
+
+Usage:
 
 ```c
 listSort(&list, comparisonFunction);
@@ -141,6 +260,12 @@ listSort(&list, comparisonFunction);
 ### Retrieving Data at a Specified Index
 
 ```c
+void *listGet(const ArrayList *list, const size_t index)
+```
+
+Usage:
+
+```c
 void *element = listGet(list, index);
 ```
 
@@ -151,12 +276,24 @@ void *element = listGet(list, index);
 ### Getting the Size
 
 ```c
+size_t listSize(const ArrayList *list)
+```
+
+Usage:
+
+```c
 size_t size = listSize(list);
 ```
 
 * Returns the current number of elements in the ArrayList.
 
 ### Checking if the ArrayList is Empty
+
+```c
+bool listIsEmpty(const ArrayList *list)
+```
+
+Usage:
 
 ```c
 bool isEmpty = listIsEmpty(list);
@@ -167,6 +304,12 @@ bool isEmpty = listIsEmpty(list);
 ### Checking if an Element Exists
 
 ```c
+bool listContains(const ArrayList *list, const void *toFind, EqualityFunction compare)
+```
+
+Usage:
+
+```c
 bool exists = listContains(list, element, compareFunction);
 ```
 
@@ -175,6 +318,12 @@ bool exists = listContains(list, element, compareFunction);
 * `compareFunction`: A function to compare elements for equality.
 
 ### Finding the Index of an Element
+
+```c
+int listIndexOf(const ArrayList *list, const void *toFind, EqualityFunction compare)
+```
+
+Usage:
 
 ```c
 int index = listIndexOf(list, element, compareFunction);
@@ -188,6 +337,12 @@ int index = listIndexOf(list, element, compareFunction);
 ### Finding the Last Index of an Element
 
 ```c
+int listLastIndexOf(const ArrayList *list, const void *toFind, EqualityFunction compare)
+```
+
+Usage:
+
+```c
 int lastIndex = listLastIndexOf(list, element, compareFunction);
 ```
 
@@ -199,6 +354,12 @@ int lastIndex = listLastIndexOf(list, element, compareFunction);
 ## Memory Management
 
 ### Freeing the ArrayList
+
+```c
+void freeList(ArrayList **listPtr)
+```
+
+Usage:
 
 ```c
 freeList(&list);
@@ -336,7 +497,7 @@ Follow these steps to compile:
 
 2. **Navigate to the Project Directory:** Change your current directory to the project root.
 
-3. **Compile the Program:** Run the `make` command to compile the program. The Makefile will automatically locate source files in the `src` directory, include header files from the `include` directory, and produce an executable named `arraylistrunner.exe` (which can be changed in the Makefile):
+3. **Compile the Program:** Run the `make` command to compile the program. The Makefile will automatically locate source files in the `src` directory, include header files from the `include` directory, and produce an executable named `arraylistrunner` (which can be changed in the Makefile):
 
     ```bash
     make
@@ -367,8 +528,8 @@ Follow these steps to compile:
 3. **Compile the Program:** Use the following `gcc` command to compile:
 
     ```bash
-    gcc -I./include -o arraylistrunner.exe main.c src/arraylist.c src/data.c
+    gcc -I./include -o arraylistrunner main.c src/arraylist.c src/data.c
     ```
 
-    Replace `arraylistrunner.exe` with the desired executable name if you wish to do so.
+    Replace `arraylistrunner` with the desired executable name if you wish to do so.
     If you encounter any errors during compilation, make sure you have met the prerequisites and resolved any issues.
