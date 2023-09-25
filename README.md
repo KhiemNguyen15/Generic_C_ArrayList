@@ -391,7 +391,7 @@ freeList(&list);
 #include <stdbool.h>
 #include <arraylist.h> //Include the ArrayList header file
 
-// Function to compare two ints for equality
+// Function to compare two integers for equality
 bool compareFunction(const void *a, const void *b)
 {
     int *valueA = (int *)a;
@@ -400,7 +400,7 @@ bool compareFunction(const void *a, const void *b)
     return *valueA == *valueB; 
 }
 
-// Function to compare two ints for sorting (ascending order)
+// Function to compare two integers for sorting (ascending order)
 int sortFunction(const void *a, const void *b)
 {
     int *valueA = (int *)a;
