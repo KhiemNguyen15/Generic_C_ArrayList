@@ -12,6 +12,7 @@
     {\
         fprintf(stderr, "Memory allocation failed.\n");\
         free(ptr);\
+        exit(1);\
     }\
 } while(0)
 
@@ -104,6 +105,19 @@ void listSet(ArrayList **listPtr, void *val, const size_t index)
 
     Data newData = createData(val);
     list->arr[index] = newData;
+}
+
+void listRetainAll(ArrayList **listPtr, const ArrayList *toRetain, EqualityFunction compare)
+{
+    ArrayList *list = *listPtr;
+
+    for(int i = 0; i < list->size; i++)
+    {
+        if(!listContains(toRetain, listGet(list, i), compare))
+        {
+            listRemove(&list, i);
+        }
+    }
 }
 
 void listRemove(ArrayList **listPtr, const size_t index)
@@ -219,11 +233,51 @@ int listLastIndexOf(const ArrayList *list, const void *toFind, EqualityFunction 
     return -1;
 }
 
-void listSort(ArrayList **listPtr, CompareFunction func)
+void swap(Data *a, Data *b)
+{
+    Data temp = *a;
+    *a = *b;
+    *b = temp;
+}
+
+int partition(Data *arr, int low, int high, CompareFunction compare)
+{
+    void *pivot = arr[high].val;
+    int i = low;
+
+    for(int j = low; j < high; j++)
+    {
+        if(compare(arr[j].val, pivot) < 0)
+        {
+            swap(&arr[i], &arr[j]);
+            i++;
+        }
+    }
+    swap(&arr[i], &arr[high]);
+
+    return i;
+}
+
+void quicksort(Data *arr, int low, int high, CompareFunction compare)
+{
+    if(low < high)
+    {
+        int pivot = partition(arr, low, high, compare);
+
+        if(pivot > 0)
+        {
+            quicksort(arr, low, pivot - 1, compare);
+        }
+        quicksort(arr, pivot + 1, high, compare);
+    }
+}
+
+void listSort(ArrayList **listPtr, CompareFunction compare)
 {
     ArrayList *list = *listPtr;
 
-    qsort(list->arr, list->size, sizeof(Data), func);
+    //qsort(list->arr, list->size, sizeof(Data), compare);
+    quicksort(list->arr, 0, list->size - 1, compare);
 }
 
 size_t listSize(const ArrayList *list)
@@ -234,6 +288,13 @@ size_t listSize(const ArrayList *list)
 bool listIsEmpty(const ArrayList *list)
 {
     return (list->size == 0) ? true : false;
+}
+
+void freeList(ArrayList **listPtr)
+{
+    ArrayList *list = *listPtr;
+    free(list->arr);
+    free(list);
 }
 
 void reallocList(ArrayList **listPtr, const bool isUp)
@@ -260,11 +321,4 @@ void reallocList(ArrayList **listPtr, const bool isUp)
         list->capacity /= INITIAL_CAPACITY;
     }
     MALLOCCHECK(list);
-}
-
-void freeList(ArrayList **listPtr)
-{
-    ArrayList *list = *listPtr;
-    free(list->arr);
-    free(list);
 }

@@ -70,6 +70,16 @@ listSet(&list, element, index);
 * `element`: A pointer to the new value.
 * `index`: The index of the element to be updated.
 
+### Retaining All Elements from Another ArrayList
+
+```c
+listRetainAll(&list, toRetain, compareFunction);
+```
+
+* Retains only the elements of the other ArrayList (`toRetain`) in the current ArrayList.
+* `toRetain`: A pointer to the ArrayList containing the elements to be retained.
+* `compareFunction`: A function used to compare elements for equality.
+
 ### Removing an Element at an Index
 
 ```c
@@ -217,9 +227,29 @@ freeList(&list);
 
 ```c
 #include <stdio.h>
-#include "arraylist.h"
+#include <stdbool.h>
+#include <arraylist.h> //Include the ArrayList header file
 
-int main() {
+// Function to compare two ints for equality
+bool compareFunction(const void *a, const void *b)
+{
+    int *valueA = (int *)a;
+    int *valueB = (int *)b;
+
+    return *valueA == *valueB; 
+}
+
+// Function to compare two ints for sorting (ascending order)
+int sortFunction(const void *a, const void *b)
+{
+    int *valueA = (int *)a;
+    int *valueB = (int *)b;
+
+    return *valueA - *valueB; 
+}
+
+int main() 
+{
     // Create two ArrayLists
     ArrayList *list1 = createList();
     ArrayList *list2 = createList();
@@ -242,7 +272,7 @@ int main() {
     ArrayList *list3 = listClone(list1);
 
     // Print the size of list1
-    printf("Size of list1: %zu\n", listSize(list1)); // Output: 3
+    printf("Size of list1: %zu\n", listSize(list1)); // Output: Size of list1: 3
 
     // Insert an element into list1 at index 1
     int newValue = 99;
@@ -256,17 +286,18 @@ int main() {
     // Find the index of an element in list1
     int indexToFind = 7;
     int foundIndex = listIndexOf(list1, &indexToFind, compareFunction);
-    printf("Index of element %d in list1: %d\n", indexToFind, foundIndex); // Output: Index of element 7 in list1: 1
+    printf("Index of element %d in list1: %d\n", indexToFind, foundIndex); // Output: Index of element 7 in list1: 2
 
     // Remove all occurrences of an element from list1 using list2
     listRemoveAll(&list1, list2, compareFunction);
 
     // Sort list3 in ascending order
-    listSort(&list3, compareFunction);
+    listSort(&list3, sortFunction);
 
     // Print the contents of list3 after sorting
     printf("Sorted list3: ");
-    for (int i = 0; i < listSize(list3); i++) {
+    for (int i = 0; i < listSize(list3); i++) 
+    {
         int *element = (int *)listGet(list3, i);
         printf("%d ", *element);
     }
@@ -303,11 +334,7 @@ Follow these steps to compile:
    git clone https://github.com/KhiemNguyen15/Generic_C_ArrayList.git
    ```
 
-2. **Navigate to the Project Directory:** Change your current directory to the project root:
-
-    ```bash
-    cd Generic_C_ArrayList 
-    ```
+2. **Navigate to the Project Directory:** Change your current directory to the project root.
 
 3. **Compile the Program:** Run the `make` command to compile the program. The Makefile will automatically locate source files in the `src` directory, include header files from the `include` directory, and produce an executable named `arraylistrunner.exe`:
 
