@@ -321,10 +321,10 @@ This guide provides instructions on how to compile and build the project. The pr
 Before you can compile, ensure that you have the following prerequisites installed on your system:
 
 * GCC (GNU Compiler Collection)
-* Make (Build automation tool)
 * Standard C Library (libc) development files (usually provided by the libc-dev package on Linux systems)
+* (Optional) Make (Build automation tool)
 
-## Compilation Steps
+## Compilation Steps With Make
 
 Follow these steps to compile:
 
@@ -336,7 +336,7 @@ Follow these steps to compile:
 
 2. **Navigate to the Project Directory:** Change your current directory to the project root.
 
-3. **Compile the Program:** Run the `make` command to compile the program. The Makefile will automatically locate source files in the `src` directory, include header files from the `include` directory, and produce an executable named `arraylistrunner.exe`:
+3. **Compile the Program:** Run the `make` command to compile the program. The Makefile will automatically locate source files in the `src` directory, include header files from the `include` directory, and produce an executable named `arraylistrunner.exe` (which can be changed in the Makefile):
 
     ```bash
     make
@@ -344,20 +344,31 @@ Follow these steps to compile:
 
     If you encounter any errors during compilation, make sure you have met the prerequisites and resolved any issues.
 
-4. **Run the Program:** After successful compilation, you can run the program as follows:
+4. **Clean Up (Optional):** To clean the build directory and remove compiled files and executables, you can use the following command:
 
     ```bash
-    ./arraylistrunner.exe
+    make clean
     ```
 
-    Replace `arraylistrunner.exe` with the desired executable name if you specified a different name in the Makefile.
+    This will delete all generated object files and the executable.
 
-### Cleaning the Build
+## Compilation Steps Without Make
 
-To clean the build directory and remove compiled files and executables, you can use the following command:
+Follow these steps to compile:
 
-```bash
-make clean
-```
+1. **Clone the Repository:** If you haven't already, clone the "Generic_C_ArrayList" repository to your local machine:
 
-This will delete all generated object files and the executable.
+   ```bash
+   git clone https://github.com/KhiemNguyen15/Generic_C_ArrayList.git
+   ```
+
+2. **Navigate to the Project Directory:** Change your current directory to the project root.
+
+3. **Compile the Program:** Use the following `gcc` command to compile:
+
+    ```bash
+    gcc -I./include -o arraylistrunner.exe main.c src/arraylist.c src/data.c
+    ```
+
+    Replace `arraylistrunner.exe` with the desired executable name if you wish to do so.
+    If you encounter any errors during compilation, make sure you have met the prerequisites and resolved any issues.

@@ -13,7 +13,9 @@ struct ArrayList
     size_t capacity;
 };
 
+// A function to compare elements for equality.
 typedef bool (*EqualityFunction)(const void *, const void *);
+// A comparison function that defines the sorting order.
 typedef int (*CompareFunction)(const void *, const void *);
 
 // Creates a new empty ArrayList.
